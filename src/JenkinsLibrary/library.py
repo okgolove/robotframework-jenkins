@@ -1,5 +1,4 @@
 import requests
-from robot.api import logger
 from .server import Server
 from .version import VERSION
 
@@ -19,7 +18,7 @@ class JenkinsLibrary(object):
     def is_jenkins_up(self, url):
         try:
             r = requests.get(url)
-        except ConnectionError as e:
+        except requests.ConnectionError:
             raise RuntimeError('Jenkins server {0} is not available')
         else:
             if r.status_code != 200:

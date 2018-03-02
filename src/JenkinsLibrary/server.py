@@ -1,8 +1,4 @@
 import jenkins
-from robot.api import logger
-from .version import VERSION
-
-__version__ = VERSION
 
 
 def is_server_initialized(func):
