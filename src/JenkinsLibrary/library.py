@@ -34,7 +34,13 @@ class JenkinsLibrary(object):
         return self.jenkins.get_job(name)
 
     def create_jenkins_job(self, name):
-        return self.jenkins.create_job(name)
+        self.jenkins.create_job(name)
 
     def delete_jenkins_job(self, name):
-        return self.jenkins.delete_job(name)
+        self.jenkins.delete_job(name)
+
+    def disable_jenkins_job(self, name):
+        self.jenkins.disable_job(name)
+
+    def enable_jenkins_job(self, name):
+        self.jenkins.enable_job(name)

@@ -54,3 +54,19 @@ class Server(object):
         except jenkins.NotFoundException as e:
             raise RuntimeError(
                 'There is no specified job in Jenkins: {0}'.format(name))
+
+    @is_server_initialized
+    def disable_job(self, name):
+        try:
+            self.server.disable_job(name)
+        except jenkins.NotFoundException as e:
+            raise RuntimeError(
+                'There is no specified job in Jenkins: {0}'.format(name))
+
+    @is_server_initialized
+    def enable_job(self, name):
+        try:
+            self.server.enable_job(name)
+        except jenkins.NotFoundException as e:
+            raise RuntimeError(
+                'There is no specified job in Jenkins: {0}'.format(name))

@@ -43,8 +43,33 @@ Delete Inexistent Job
     Run Keyword And Expect Error    There is no specified job in Jenkins: ${test_job_name}\
     ...    Delete Jenkins Job    ${test_job_name}
 
+Disable Inexistent Job
+    [Tags]    job
+    Run Keyword And Expect Error    There is no specified job in Jenkins: ${test_job_name}\
+    ...    Disable Jenkins Job    ${test_job_name}
+
+Enable Inexistent Job
+    [Tags]    job
+    Run Keyword And Expect Error    There is no specified job in Jenkins: ${test_job_name}\
+    ...    Disable Jenkins Job    ${test_job_name}
+
+Enable Disabled Job
+    [Tags]    job
+    [Setup]    Create And Disable Job
+    [Teardown]    Delete Jenkins Job    ${test_job_name}
+    Enable Jenkins Job    ${test_job_name}
+
+Disable Enabled Job
+    [Tags]    job
+    [Setup]    Create Jenkins Job    ${test_job_name}
+    [Teardown]    Delete Jenkins Job    ${test_job_name}
+    Disable Jenkins Job    ${test_job_name}
 
 *** Keywords ***
+Create And Disable Job
+    Create Jenkins Job    ${test_job_name}
+    Disable Jenkins Job    ${test_job_name}
+
 Create Multiple Jobs
     Create Jenkins Job    ${test_job_name}
     Create Jenkins Job    ${second_test_job_name}
