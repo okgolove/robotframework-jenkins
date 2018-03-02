@@ -35,7 +35,7 @@ class Server(object):
     def get_job(self, name):
         try:
             self.server.get_job_info(name)
-        except jenkins.NotFoundException as e:
+        except jenkins.NotFoundException:
             raise RuntimeError('Can\'t find specified job: {0}'.format(name))
         return self.server.get_job_info(name)
 
@@ -43,7 +43,7 @@ class Server(object):
     def create_job(self, name):
         try:
             self.server.create_job(name, jenkins.EMPTY_CONFIG_XML)
-        except jenkins.JenkinsException as e:
+        except jenkins.JenkinsException:
             raise RuntimeError(
                 'Specified job already exists: {0}'.format(name))
 
@@ -51,7 +51,7 @@ class Server(object):
     def delete_job(self, name):
         try:
             self.server.delete_job(name)
-        except jenkins.NotFoundException as e:
+        except jenkins.NotFoundException:
             raise RuntimeError(
                 'There is no specified job in Jenkins: {0}'.format(name))
 
@@ -59,7 +59,7 @@ class Server(object):
     def disable_job(self, name):
         try:
             self.server.disable_job(name)
-        except jenkins.NotFoundException as e:
+        except jenkins.NotFoundException:
             raise RuntimeError(
                 'There is no specified job in Jenkins: {0}'.format(name))
 
@@ -67,7 +67,7 @@ class Server(object):
     def enable_job(self, name):
         try:
             self.server.enable_job(name)
-        except jenkins.NotFoundException as e:
+        except jenkins.NotFoundException:
             raise RuntimeError(
                 'There is no specified job in Jenkins: {0}'.format(name))
 
@@ -78,7 +78,7 @@ class Server(object):
                 type(params).__name__))
         try:
             self.server.build_job(name, params)
-        except jenkins.NotFoundException as e:
+        except jenkins.NotFoundException:
             raise RuntimeError(
                 'There is no specified job in Jenkins: {0}'.format(name))
         # TODO: return build number
