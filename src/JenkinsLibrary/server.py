@@ -9,7 +9,7 @@ def is_server_initialized(func):
     def _decorator(self, *args, **kwargs):
         if not self.initialized:
             raise RuntimeError('Jenkins server was not initialized')
-        func(self, *args, **kwargs)
+        return func(self, *args, **kwargs)
     return _decorator
 
 
@@ -37,6 +37,7 @@ class Server(object):
             self.server.get_job_info(name)
         except jenkins.NotFoundException as e:
             raise RuntimeError('Can\'t find specified job: {0}'.format(name))
+        return self.server.get_job_info(name)
 
     @is_server_initialized
     def create_job(self, name):
