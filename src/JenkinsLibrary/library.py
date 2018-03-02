@@ -44,3 +44,6 @@ class JenkinsLibrary(object):
 
     def enable_jenkins_job(self, name):
         self.jenkins.enable_job(name)
+
+    def start_jenkins_job(self, name, params={}):
+        self.jenkins.build_job(name, params)
