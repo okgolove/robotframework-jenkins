@@ -11,7 +11,7 @@ Wrong Params Type
     [Tags]    execute
     [Setup]    Create Jenkins Job    ${test_job_name}
     [Teardown]    Delete Jenkins Job    ${test_job_name}
-    Run Keyword And Expect Error    Params must be a dictionary, not str\
+    Run Keyword And Expect Error    Params must be a dictionary, not *\
     ...    Start Jenkins Job    ${test_job_name}    test_string
 
 Run Existent Job Without Params
