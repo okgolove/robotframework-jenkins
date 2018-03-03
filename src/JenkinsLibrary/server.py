@@ -1,4 +1,5 @@
 import jenkins
+from robot.api import logger
 
 
 def is_server_initialized(func):
@@ -30,10 +31,10 @@ class Server(object):
     @is_server_initialized
     def get_job(self, name):
         try:
-            self.server.get_job_info(name)
+            job = self.server.get_job_info(name)
         except jenkins.NotFoundException:
             raise RuntimeError('Can\'t find specified job: {0}'.format(name))
-        return self.server.get_job_info(name)
+        return job
 
     @is_server_initialized
     def create_job(self, name):
@@ -78,3 +79,12 @@ class Server(object):
             raise RuntimeError(
                 'There is no specified job in Jenkins: {0}'.format(name))
         # TODO: return build number
+
+    @is_server_initialized
+    def get_builds(self, name):
+        try:
+            builds = self.server.get_job_info(name)
+        except jenkins.NotFoundException:
+            raise RuntimeError(
+                'There is no specified job in Jenkins: {0}'.format(name))
+        return builds

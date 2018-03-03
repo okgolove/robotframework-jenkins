@@ -13,4 +13,3 @@ Wait For Container
 Global Setup
     Set Global Variable    ${jenkins_address}    ${url}
     Wait For Container
-

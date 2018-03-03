@@ -46,3 +46,6 @@ class JenkinsLibrary(object):
 
     def start_jenkins_job(self, name, params={}):
         self.jenkins.build_job(name, params)
+
+    def get_jenkins_job_builds(self, name):
+        return self.jenkins.get_builds(name)
