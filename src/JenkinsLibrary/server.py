@@ -1,8 +1,4 @@
 import jenkins
-from robot.api import logger
-from .version import VERSION
-
-__version__ = VERSION
 
 
 def is_server_initialized(func):
@@ -34,16 +30,16 @@ class Server(object):
     @is_server_initialized
     def get_job(self, name):
         try:
-            self.server.get_job_info(name)
-        except jenkins.NotFoundException as e:
+            job = self.server.get_job_info(name)
+        except jenkins.NotFoundException:
             raise RuntimeError('Can\'t find specified job: {0}'.format(name))
-        return self.server.get_job_info(name)
+        return job
 
     @is_server_initialized
     def create_job(self, name):
         try:
             self.server.create_job(name, jenkins.EMPTY_CONFIG_XML)
-        except jenkins.JenkinsException as e:
+        except jenkins.JenkinsException:
             raise RuntimeError(
                 'Specified job already exists: {0}'.format(name))
 
@@ -51,7 +47,7 @@ class Server(object):
     def delete_job(self, name):
         try:
             self.server.delete_job(name)
-        except jenkins.NotFoundException as e:
+        except jenkins.NotFoundException:
             raise RuntimeError(
                 'There is no specified job in Jenkins: {0}'.format(name))
 
@@ -59,7 +55,7 @@ class Server(object):
     def disable_job(self, name):
         try:
             self.server.disable_job(name)
-        except jenkins.NotFoundException as e:
+        except jenkins.NotFoundException:
             raise RuntimeError(
                 'There is no specified job in Jenkins: {0}'.format(name))
 
@@ -67,6 +63,27 @@ class Server(object):
     def enable_job(self, name):
         try:
             self.server.enable_job(name)
-        except jenkins.NotFoundException as e:
+        except jenkins.NotFoundException:
             raise RuntimeError(
                 'There is no specified job in Jenkins: {0}'.format(name))
+
+    @is_server_initialized
+    def build_job(self, name, params={}):
+        if not isinstance(params, dict):
+            raise RuntimeError('Params must be a dictionary, not {0}'.format(
+                type(params).__name__))
+        try:
+            self.server.build_job(name, params)
+        except jenkins.NotFoundException:
+            raise RuntimeError(
+                'There is no specified job in Jenkins: {0}'.format(name))
+        # TODO: return build number
+
+    @is_server_initialized
+    def get_builds(self, name):
+        try:
+            builds = self.server.get_job_info(name)
+        except jenkins.NotFoundException:
+            raise RuntimeError(
+                'There is no specified job in Jenkins: {0}'.format(name))
+        return builds
