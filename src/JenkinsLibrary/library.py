@@ -17,7 +17,7 @@ class JenkinsLibrary(object):
 
     def is_jenkins_up(self, url):
         try:
-            r = requests.get(url)
+            r = requests.get("{0}/login".format(url))
         except requests.ConnectionError:
             raise RuntimeError('Jenkins server {0} is not available')
         else:

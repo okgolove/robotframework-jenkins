@@ -1,7 +1,7 @@
 *** Settings ***
 Library    Collections
 Library    JenkinsLibrary
-Suite Setup    Set Jenkins Server    url=http://127.0.0.1:8080    username=admin    password=admin
+Suite Setup    Set Jenkins Server    url=${jenkins_address}    username=admin    password=admin
 
 *** Variables ***
 ${test_job_name}    test_job
@@ -83,7 +83,7 @@ Check Multiple Jobs
     Should Be True    ${jobs}
     ${second_job} =    Get From List    ${jobs}    0
     Should Be Equal    ${second_job['name']}    ${second_test_job_name}
-    Should Be Equal    ${second_job['url']}    http://127.0.0.1:8080/job/${second_test_job_name}/
+    Should Be Equal    ${second_job['url']}    ${jenkins_address}/job/${second_test_job_name}/
     ${first_job} =    Get From List    ${jobs}    1
     Should Be Equal    ${first_job['name']}    ${test_job_name}
-    Should Be Equal    ${first_job['url']}    http://127.0.0.1:8080/job/${test_job_name}/
+    Should Be Equal    ${first_job['url']}    ${jenkins_address}/job/${test_job_name}/

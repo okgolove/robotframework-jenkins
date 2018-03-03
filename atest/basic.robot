@@ -8,17 +8,17 @@ Keyword Without Init
 
 Normal Init Jenkins
     [Tags]    init    auth
-    Set Jenkins Server    url=http://127.0.0.1:8080    username=admin    password=admin
+    Set Jenkins Server    url=${jenkins_address}    username=admin    password=admin
 
 Wrong Username
     [Tags]    init    auth
     Run Keyword And Expect Error    Can't connect to Jenkins: Error in request. Possibly authentication failed [401]: Invalid password/token for user: nimda\
-    ...    Set Jenkins Server    url=http://127.0.0.1:8080    username=nimda    password=admin
+    ...    Set Jenkins Server    url=${jenkins_address}    username=nimda    password=admin
 
 Wrong Password
     [Tags]    init    auth
     Run Keyword And Expect Error    Can't connect to Jenkins: Error in request. Possibly authentication failed [401]: Invalid password/token for user: admin\
-    ...    Set Jenkins Server    url=http://127.0.0.1:8080    username=admin    password=nimda
+    ...    Set Jenkins Server    url=${jenkins_address}    username=admin    password=nimda
 
 Wrong URL
     [Tags]    init    auth

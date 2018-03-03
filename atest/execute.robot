@@ -1,7 +1,7 @@
 *** Settings ***
 Library    Collections
 Library    JenkinsLibrary
-Suite Setup    Set Jenkins Server    url=http://127.0.0.1:8080    username=admin    password=admin
+Suite Setup    Set Jenkins Server    url=${jenkins_address}    username=admin    password=admin
 
 *** Variables ***
 ${test_job_name}    test_job
