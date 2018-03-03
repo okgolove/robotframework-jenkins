@@ -1,5 +1,4 @@
 import jenkins
-from robot.api import logger
 
 
 def is_server_initialized(func):
