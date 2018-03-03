@@ -1,0 +1,24 @@
+language: python
+python:
+  - "2.7"
+  - "3.3"
+  - "3.4"
+  - "3.5"
+  - "3.6"
+
+services:
+  - docker
+
+before_install:
+  - docker build --pull -t jenkins-test atest/docker
+  - docker run -p 127.0.0.1:8080:8080 -e JAVA_OPTS=-Djenkins.install.runSetupWizard=false -d jenkins-test
+
+install:
+  - pip install .
+
+script:
+  - robot --loglevel DEBUG atest/
+
+notifications:
+  webhooks:
+    - https://fathomless-fjord-24024.herokuapp.com/notify
