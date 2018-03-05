@@ -36,9 +36,11 @@ class Server(object):
         return job
 
     @is_server_initialized
-    def create_job(self, name):
+    def create_job(self, name, template):
+        if not template:
+            template = jenkins.EMPTY_CONFIG_XML
         try:
-            self.server.create_job(name, jenkins.EMPTY_CONFIG_XML)
+            self.server.create_job(name, template)
         except jenkins.JenkinsException:
             raise RuntimeError(
                 'Specified job already exists: {0}'.format(name))
@@ -87,3 +89,12 @@ class Server(object):
             raise RuntimeError(
                 'There is no specified job in Jenkins: {0}'.format(name))
         return builds
+
+    @is_server_initialized
+    def get_job_config(self, name):
+        try:
+            job_xml = self.server.get_job_config(name)
+        except jenkins.NotFoundException:
+            raise RuntimeError(
+                'There is no specified job in Jenkins: {0}'.format(name))
+        return job_xml

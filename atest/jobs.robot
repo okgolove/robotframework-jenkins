@@ -1,5 +1,6 @@
 *** Settings ***
 Library    Collections
+Library    OperatingSystem
 Library    JenkinsLibrary
 Suite Setup    Set Jenkins Server    url=${jenkins_address}    username=admin    password=admin
 
@@ -38,6 +39,13 @@ Create Existent Job
     Run Keyword And Expect Error    Specified job already exists: ${test_job_name}\
     ...    Create Jenkins Job    ${test_job_name}
 
+Create Job From Template
+    [Tags]    job
+    [Teardown]    Delete Jenkins Job    ${test_job_name}
+    ${template} =    Get File    ${templates_dir}/job_parameterized.xml
+    Create Jenkins Job    ${test_job_name}    ${template}
+    # TODO: Write keyword for getting parameters
+
 Delete Inexistent Job
     [Tags]    job
     Run Keyword And Expect Error    There is no specified job in Jenkins: ${test_job_name}\
@@ -64,6 +72,13 @@ Disable Enabled Job
     [Setup]    Create Jenkins Job    ${test_job_name}
     [Teardown]    Delete Jenkins Job    ${test_job_name}
     Disable Jenkins Job    ${test_job_name}
+
+Get Job XML
+    [Tags]    job
+    [Setup]    Create Jenkins Job    ${test_job_name}
+    [Teardown]    Delete Jenkins Job    ${test_job_name}
+    ${xml} =    Get Jenkins Job XML    ${test_job_name}
+    Should Start With    ${xml}    <?xml version=
 
 *** Keywords ***
 Create And Disable Job
