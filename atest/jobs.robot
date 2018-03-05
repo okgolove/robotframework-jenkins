@@ -77,7 +77,7 @@ Get Job XML
     [Setup]    Create Jenkins Job    ${test_job_name}
     [Teardown]    Delete Jenkins Job    ${test_job_name}
     ${job_xml} =    Get Jenkins Job XML    ${test_job_name}
-    Should Start With    ${xml}    <?xml version=
+    Should Start With    ${job_xml}    <?xml version=
 
 Get Job And Compare XML
     [Tags]    job
