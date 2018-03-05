@@ -1,19 +1,18 @@
-<?xml version='1.1' encoding='UTF-8'?>
-<project>
-  <description></description>
+<?xml version="1.1" encoding="UTF-8"?><project>
+  <description/>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
           <name>param_string</name>
-          <description></description>
+          <description/>
           <defaultValue>param_string</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.BooleanParameterDefinition>
           <name>param_bool</name>
-          <description></description>
+          <description/>
           <defaultValue>true</defaultValue>
         </hudson.model.BooleanParameterDefinition>
       </parameterDefinitions>
