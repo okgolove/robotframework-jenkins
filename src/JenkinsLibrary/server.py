@@ -1,5 +1,6 @@
-import jenkins
+from . import jenkins
 from robot.api import logger
+
 
 def is_server_initialized(func):
     def _decorator(self, *args, **kwargs):

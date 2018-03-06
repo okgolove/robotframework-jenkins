@@ -62,12 +62,12 @@ from six.moves.urllib.error import URLError
 from six.moves.urllib.parse import quote, urlencode, urljoin, urlparse
 from six.moves.urllib.request import Request, install_opener, build_opener, urlopen
 
-from jenkins import plugins
+from . import plugins
 
 try:
     import kerberos
     assert kerberos  # pyflakes
-    from jenkins import urllib_kerb
+    from . import urllib_kerb
     opener = build_opener()
     opener.add_handler(urllib_kerb.HTTPNegotiateHandler())
     install_opener(opener)

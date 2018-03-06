@@ -1,5 +1,5 @@
 from os.path import join, dirname
-from setuptools import setup
+from setuptools import setup, find_packages
 
 exec(open(join(dirname(__file__),
                'src', 'JenkinsLibrary', 'version.py')).read())
@@ -29,7 +29,7 @@ Framework :: Robot Framework
 setup(
     name=PACKAGE,
     package_dir={'': 'src'},
-    packages=['JenkinsLibrary'],
+    packages=find_packages('src'),
     version=VERSION,
     description=DESCRIPTION,
     author='Mikhail Naletov',
@@ -37,5 +37,5 @@ setup(
     url='https://github.com/okgolove/robotframework-jenkins',
     keywords=['jenkins', 'robotframework', 'robot', 'testing'],
     classifiers=CLASSIFIERS,
-    install_requires=REQUIREMENTS
+    install_requires=REQUIREMENTS,
 )
