@@ -1,5 +1,5 @@
 import jenkins
-
+from robot.api import logger
 
 def is_server_initialized(func):
     def _decorator(self, *args, **kwargs):
@@ -98,3 +98,17 @@ class Server(object):
             raise RuntimeError(
                 'There is no specified job in Jenkins: {0}'.format(name))
         return job_xml
+
+    @is_server_initialized
+    def get_job_parameters(self, name):
+        job_info = self.get_job(name)
+        params = []
+        if job_info['property']:
+            for param in job_info['property'][0]['parameterDefinitions']:
+                params.append({
+                    'name': param['name'],
+                    'description': param['description'],
+                    'type': param['type'],
+                    'value': param['defaultParameterValue']['value']
+                })
+        return params

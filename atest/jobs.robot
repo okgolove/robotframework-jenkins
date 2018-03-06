@@ -41,9 +41,12 @@ Create Existent Job
 
 Create Job From Template
     [Tags]    job
+    [Setup]    Create Job From Template    ${test_job_name}    ${job_parameterized_scratch}
     [Teardown]    Delete Jenkins Job    ${test_job_name}
-    Create Job From Template    ${test_job_name}    ${job_parameterized_scratch}
-    # TODO: Write keyword for getting parameters
+    ${parameters} =    Get Jenkins Job Parameters    ${test_job_name}
+    Should Be True    ${parameters}
+    Should Be Equal    param_string    ${parameters[0]['name']}
+    Should Be Equal    param_bool    ${parameters[1]['name']}
 
 Delete Inexistent Job
     [Tags]    job
@@ -86,6 +89,16 @@ Get Job And Compare XML
     ${job_xml} =    Get Jenkins Job XML    ${test_job_name}
     ${template_xml} =    Get File    ${templates_dir}/${job_parameterized_scratch}
     Should Be Equal As Strings    ${job_xml}    ${template_xml}
+
+Check Job Parameters (parameters is inexistent)
+    [Tags]    job
+    [Setup]    Create Jenkins Job    ${test_job_name}
+    [Teardown]    Delete Jenkins Job    ${test_job_name}
+    ${parameters} =    Get Jenkins Job Parameters    ${test_job_name}
+    Should Not Be True    ${parameters}
+
+
+
 
 *** Keywords ***
 Create And Disable Job

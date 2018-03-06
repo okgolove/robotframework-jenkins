@@ -52,3 +52,6 @@ class JenkinsLibrary(object):
 
     def get_jenkins_job_xml(self, name):
         return self.jenkins.get_job_config(name)
+
+    def get_jenkins_job_parameters(self, name):
+        return self.jenkins.get_job_parameters(name)
