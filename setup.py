@@ -6,7 +6,9 @@ exec(open(join(dirname(__file__),
 PACKAGE = 'robotframework-jenkins'
 DESCRIPTION = '''Library for Robot Framework for Jenkins interaction'''
 REQUIREMENTS = [
-    'python-jenkins==0.4.15',
+    'six>=1.3.0',
+    'pbr>=0.8.2',
+    'multi_key_dict',
     'robotframework==3.0.2',
     'requests==2.18.4'
 ]
