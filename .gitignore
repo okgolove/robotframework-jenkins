@@ -100,7 +100,5 @@ ENV/
 .mypy_cache/
 
 .pre-commit-config.yaml
-<<<<<<< HEAD
-=======
 Pipfile
->>>>>>> release/0.1.1
+
