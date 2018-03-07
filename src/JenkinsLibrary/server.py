@@ -78,6 +78,7 @@ class Server(object):
             raise RuntimeError('Params must be a dictionary, not {0}'.format(
                 type(params).__name__))
         job_params = self.get_job_parameters(name)
+        build_number = self.get_next_build_number(name)
         if job_params:
             if not params:
                 raise RuntimeError('This is parameterized job, you have to '
@@ -89,6 +90,7 @@ class Server(object):
             else:
                 raise RuntimeError('This is not parameterized job, you don\'t '
                                    'have to no specify params dicitionary')
+        return build_number
 
         # TODO: return build number
 

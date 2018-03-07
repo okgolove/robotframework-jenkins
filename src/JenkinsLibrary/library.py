@@ -45,7 +45,7 @@ class JenkinsLibrary(object):
         self.jenkins.enable_job(name)
 
     def start_jenkins_job(self, name, params={}):
-        self.jenkins.build_job(name, params)
+        return self.jenkins.build_job(name, params)
 
     def get_jenkins_job_builds(self, name):
         return self.jenkins.get_builds(name)
