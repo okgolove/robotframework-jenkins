@@ -14,7 +14,7 @@ Wrong Params Type
 
 Run Inexistent Job
     [Tags]    execute
-    Run Keyword And Expect Error    There is no specified job in Jenkins: ${test_job_name}\
+    Run Keyword And Expect Error    Can't find specified job: ${test_job_name}\
     ...    Start Jenkins Job    ${test_job_name}
 
 Run Existent Unparameterized Job Without Params
