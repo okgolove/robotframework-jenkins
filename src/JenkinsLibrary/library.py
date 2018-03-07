@@ -32,8 +32,8 @@ class JenkinsLibrary(object):
     def get_jenkins_job_by_name(self, name):
         return self.jenkins.get_job(name)
 
-    def create_jenkins_job(self, name):
-        self.jenkins.create_job(name)
+    def create_jenkins_job(self, name, template=None):
+        self.jenkins.create_job(name, template)
 
     def delete_jenkins_job(self, name):
         self.jenkins.delete_job(name)
@@ -45,7 +45,16 @@ class JenkinsLibrary(object):
         self.jenkins.enable_job(name)
 
     def start_jenkins_job(self, name, params={}):
-        self.jenkins.build_job(name, params)
+        return self.jenkins.build_job(name, params)
 
     def get_jenkins_job_builds(self, name):
         return self.jenkins.get_builds(name)
+
+    def get_jenkins_job_xml(self, name):
+        return self.jenkins.get_job_config(name)
+
+    def get_jenkins_job_parameters(self, name):
+        return self.jenkins.get_job_parameters(name)
+
+    def get_next_build_number(self, name):
+        return self.jenkins.get_next_build_number(name)

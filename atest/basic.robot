@@ -1,5 +1,6 @@
 *** Settings ***
 Library    JenkinsLibrary
+Resource    lib/jenkins_keywords.robot
 
 *** Test Cases ***
 Keyword Without Init
