@@ -1,5 +1,4 @@
 import jenkins
-from robot.api import logger
 
 
 def is_server_initialized(func):
@@ -13,8 +12,6 @@ def is_server_initialized(func):
 class Server(object):
     def __init__(self):
         self.initialized = False
-
-
 
     def initialize(self, url, username, password):
         self.server = jenkins.Jenkins(url, username, password)
@@ -91,8 +88,6 @@ class Server(object):
                 raise RuntimeError('This is not parameterized job, you don\'t '
                                    'have to no specify params dicitionary')
         return build_number
-
-        # TODO: return build number
 
     @is_server_initialized
     def get_next_build_number(self, name):
