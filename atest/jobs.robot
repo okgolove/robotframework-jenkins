@@ -1,11 +1,9 @@
 *** Settings ***
 Library    Collections
+Library    OperatingSystem
 Library    JenkinsLibrary
+Resource    lib/jenkins_keywords.robot
 Suite Setup    Set Jenkins Server    url=${jenkins_address}    username=admin    password=admin
-
-*** Variables ***
-${test_job_name}    test_job
-${second_test_job_name}    blablabla_job
 
 *** Test Cases ***
 Get One Existent Job
@@ -38,6 +36,15 @@ Create Existent Job
     Run Keyword And Expect Error    Specified job already exists: ${test_job_name}\
     ...    Create Jenkins Job    ${test_job_name}
 
+Create Job From Template
+    [Tags]    job
+    [Setup]    Create Job From Template    ${test_job_name}    ${job_parameterized_scratch}
+    [Teardown]    Delete Jenkins Job    ${test_job_name}
+    ${parameters} =    Get Jenkins Job Parameters    ${test_job_name}
+    Should Be True    ${parameters}
+    Should Be Equal    param_string    ${parameters[0]['name']}
+    Should Be Equal    param_bool    ${parameters[1]['name']}
+
 Delete Inexistent Job
     [Tags]    job
     Run Keyword And Expect Error    There is no specified job in Jenkins: ${test_job_name}\
@@ -65,25 +72,24 @@ Disable Enabled Job
     [Teardown]    Delete Jenkins Job    ${test_job_name}
     Disable Jenkins Job    ${test_job_name}
 
-*** Keywords ***
-Create And Disable Job
-    Create Jenkins Job    ${test_job_name}
-    Disable Jenkins Job    ${test_job_name}
+Get Job XML
+    [Tags]    job
+    [Setup]    Create Jenkins Job    ${test_job_name}
+    [Teardown]    Delete Jenkins Job    ${test_job_name}
+    ${job_xml} =    Get Jenkins Job XML    ${test_job_name}
+    Should Start With    ${job_xml}    <?xml version=
 
-Create Multiple Jobs
-    Create Jenkins Job    ${test_job_name}
-    Create Jenkins Job    ${second_test_job_name}
+Get Job And Compare XML
+    [Tags]    job
+    [Setup]    Create Job From Template    ${test_job_name}    ${job_parameterized_scratch}
+    [Teardown]    Delete Jenkins Job    ${test_job_name}
+    ${job_xml} =    Get Jenkins Job XML    ${test_job_name}
+    ${template_xml} =    Get File    ${templates_dir}/${job_parameterized_scratch}
+    Should Be Equal As Strings    ${job_xml}    ${template_xml}
 
-Delete Multiple Jobs
-    Delete Jenkins Job    ${test_job_name}
-    Delete Jenkins Job    ${second_test_job_name}
-
-Check Multiple Jobs
-    ${jobs} =    Get Jenkins Jobs
-    Should Be True    ${jobs}
-    ${second_job} =    Get From List    ${jobs}    0
-    Should Be Equal    ${second_job['name']}    ${second_test_job_name}
-    Should Be Equal    ${second_job['url']}    ${jenkins_address}/job/${second_test_job_name}/
-    ${first_job} =    Get From List    ${jobs}    1
-    Should Be Equal    ${first_job['name']}    ${test_job_name}
-    Should Be Equal    ${first_job['url']}    ${jenkins_address}/job/${test_job_name}/
+Check Job Parameters (parameters is inexistent)
+    [Tags]    job
+    [Setup]    Create Jenkins Job    ${test_job_name}
+    [Teardown]    Delete Jenkins Job    ${test_job_name}
+    ${parameters} =    Get Jenkins Job Parameters    ${test_job_name}
+    Should Not Be True    ${parameters}

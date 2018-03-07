@@ -36,9 +36,11 @@ class Server(object):
         return job
 
     @is_server_initialized
-    def create_job(self, name):
+    def create_job(self, name, template):
+        if not template:
+            template = jenkins.EMPTY_CONFIG_XML
         try:
-            self.server.create_job(name, jenkins.EMPTY_CONFIG_XML)
+            self.server.create_job(name, template)
         except jenkins.JenkinsException:
             raise RuntimeError(
                 'Specified job already exists: {0}'.format(name))
@@ -72,12 +74,24 @@ class Server(object):
         if not isinstance(params, dict):
             raise RuntimeError('Params must be a dictionary, not {0}'.format(
                 type(params).__name__))
-        try:
-            self.server.build_job(name, params)
-        except jenkins.NotFoundException:
-            raise RuntimeError(
-                'There is no specified job in Jenkins: {0}'.format(name))
-        # TODO: return build number
+        job_params = self.get_job_parameters(name)
+        build_number = self.get_next_build_number(name)
+        if job_params:
+            if not params:
+                raise RuntimeError('This is parameterized job, you have to '
+                                   'specify params dicitionary')
+                self.server.build_job(name, params)
+        else:
+            if not params:
+                self.server.build_job(name, params)
+            else:
+                raise RuntimeError('This is not parameterized job, you don\'t '
+                                   'have to no specify params dicitionary')
+        return build_number
+
+    @is_server_initialized
+    def get_next_build_number(self, name):
+        return self.get_builds(name)['nextBuildNumber']
 
     @is_server_initialized
     def get_builds(self, name):
@@ -87,3 +101,26 @@ class Server(object):
             raise RuntimeError(
                 'There is no specified job in Jenkins: {0}'.format(name))
         return builds
+
+    @is_server_initialized
+    def get_job_config(self, name):
+        try:
+            job_xml = self.server.get_job_config(name)
+        except jenkins.NotFoundException:
+            raise RuntimeError(
+                'There is no specified job in Jenkins: {0}'.format(name))
+        return job_xml
+
+    @is_server_initialized
+    def get_job_parameters(self, name):
+        job_info = self.get_job(name)
+        params = []
+        if job_info['property']:
+            for param in job_info['property'][0]['parameterDefinitions']:
+                params.append({
+                    'name': param['name'],
+                    'description': param['description'],
+                    'type': param['type'],
+                    'value': param['defaultParameterValue']['value']
+                })
+        return params
