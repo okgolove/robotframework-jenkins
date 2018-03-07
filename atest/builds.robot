@@ -28,10 +28,3 @@ Get Builds (existent jobs, no builds)
     ${builds} =    Get Jenkins Job Builds    ${test_job_name}
     Should Not Be True    ${builds['lastBuild']}
     Should Be Equal As Integers    1    ${builds['nextBuildNumber']}
-
-*** Keywords ***
-Create Job And Run Multiple Builds
-    Create Jenkins Job    ${test_job_name}
-    Start Jenkins Job    ${test_job_name}
-    Start Jenkins Job    ${test_job_name}
-    Start Jenkins Job    ${test_job_name}
