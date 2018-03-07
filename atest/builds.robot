@@ -1,5 +1,6 @@
 *** Settings ***
 Library    JenkinsLibrary
+Resource    lib/jenkins_keywords.robot
 Suite Setup    Set Jenkins Server    url=${jenkins_address}    username=admin    password=admin
 
 *** Variables ***
