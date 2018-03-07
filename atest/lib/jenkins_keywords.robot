@@ -4,12 +4,6 @@ Library    OperatingSystem
 Library    JenkinsLibrary
 
 *** Keywords ***
-Create Job And Run Multiple Builds
-    Create Jenkins Job    ${test_job_name}
-    Start Jenkins Job    ${test_job_name}
-    Start Jenkins Job    ${test_job_name}
-    Start Jenkins Job    ${test_job_name}
-
 Create And Disable Job
     Create Jenkins Job    ${test_job_name}
     Disable Jenkins Job    ${test_job_name}
@@ -36,3 +30,9 @@ Create Job From Template
     [Arguments]    ${job_name}    ${template_file}
     ${template} =    Get File    ${templates_dir}/${template_file}
     Create Jenkins Job    ${job_name}    ${template}
+
+Create Job And Run Multiple Builds
+    [Arguments]    ${job_name}    ${count}=2
+    Create Jenkins Job    ${job_name}
+    :FOR    ${run}    IN RANGE    ${count}
+    \    Start Jenkins Job    ${job_name}

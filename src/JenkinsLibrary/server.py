@@ -14,6 +14,8 @@ class Server(object):
     def __init__(self):
         self.initialized = False
 
+
+
     def initialize(self, url, username, password):
         self.server = jenkins.Jenkins(url, username, password)
         try:
@@ -89,6 +91,10 @@ class Server(object):
                                    'have to no specify params dicitionary')
 
         # TODO: return build number
+
+    @is_server_initialized
+    def get_next_build_number(self, name):
+        return self.get_builds(name)['nextBuildNumber']
 
     @is_server_initialized
     def get_builds(self, name):

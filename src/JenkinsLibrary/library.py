@@ -55,3 +55,6 @@ class JenkinsLibrary(object):
 
     def get_jenkins_job_parameters(self, name):
         return self.jenkins.get_job_parameters(name)
+
+    def get_next_build_number(self, name):
+        return self.jenkins.get_next_build_number(name)
