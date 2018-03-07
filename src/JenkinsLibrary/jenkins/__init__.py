@@ -1047,8 +1047,16 @@ class Jenkins(object):
         :param parameters: parameters for job, or ``None``, ``dict``
         :param token: Jenkins API token
         '''
-        return self.jenkins_open(Request(
-            self.build_job_url(name, parameters, token), b''))
+        try:
+            build = self.jenkins_open(Request(
+                self.build_job_url(name, parameters, token), b''))
+        except HTTPError as e:
+            if str(e) == "HTTP Error 400: Nothing is submitted":
+                raise JenkinsException('Parameterized build can not be run '
+                                       'without parameters')
+            else:
+                raise JenkinsException(e)
+        return build
 
     def run_script(self, script):
         '''Execute a groovy script on the jenkins master.
