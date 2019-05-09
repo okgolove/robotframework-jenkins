@@ -48,5 +48,6 @@ Compare Nuild Number
     [Setup]    Create Jenkins Job    ${test_job_name}
     [Teardown]    Delete Jenkins Job    ${test_job_name}
     ${build_number} =    Start Jenkins Job    ${test_job_name}
+    Sleep   10 Seconds
     ${next_build_before} =    Get Next Build Number    ${test_job_name}
     Should Be Equal As Integers    ${next_build_before}    ${build_number + 1}
