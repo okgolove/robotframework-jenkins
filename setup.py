@@ -11,9 +11,12 @@ REQUIREMENTS = [
     'requests==2.18.4'
 ]
 
+with open('README.md') as f:
+    LONG_DESCRIPTION = f.read()
+
 CLASSIFIERS = '''
 Development Status :: 5 - Production/Stable
-License :: OSI Approved :: Apache Software License
+License :: OSI Approved :: MIT License
 Operating System :: OS Independent
 Programming Language :: Python
 Programming Language :: Python :: 2
@@ -29,6 +32,8 @@ setup(
     packages=find_packages('src'),
     version=VERSION,
     description=DESCRIPTION,
+    long_description=LONG_DESCRIPTION,
+    long_description_content_type="text/markdown",
     author='Mikhail Naletov',
     author_email='admin@markeloff.net',
     url='https://github.com/okgolove/robotframework-jenkins',
