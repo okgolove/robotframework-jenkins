@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/okgolove/robotframework-jenkins.svg?branch=master)](https://travis-ci.org/okgolove/robotframework-jenkins)
+[![PyPI version](https://badge.fury.io/py/robotframework-jenkins.svg)](https://badge.fury.io/py/robotframework-jenkins)
 
 JenkinsLibrary for Robot Framework
 ==============================
