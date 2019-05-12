@@ -1,25 +1,28 @@
 dist: xenial
 language: python
 python:
-  - "2.7"
-  - "3.4"
-  - "3.5"
-  - "3.6"
-  - "3.7"
-
+- '2.7'
+- '3.4'
+- '3.5'
+- '3.6'
+- '3.7'
 services:
-  - docker
-
+- docker
 before_install:
-  - docker build --pull -t jenkins-test atest/docker
-  - docker run -p 127.0.0.1:8080:8080 -e JAVA_OPTS=-Djenkins.install.runSetupWizard=false -d jenkins-test
-
+- docker build --pull -t jenkins-test atest/docker
+- docker run -p 127.0.0.1:8080:8080 -e JAVA_OPTS=-Djenkins.install.runSetupWizard=false -d jenkins-test
 install:
-  - pip install .
-
+- pip install .
 script:
-  - robot --loglevel DEBUG atest/
-
+- robot --loglevel DEBUG atest/
 notifications:
   webhooks:
-    - https://fathomless-fjord-24024.herokuapp.com/notify
+  - https://fathomless-fjord-24024.herokuapp.com/notify
+deploy:
+  provider: pypi
+  user: okgolove
+  distributions: 'sdist bdist_wheel'
+  password:
+    secure: C/4hGbwabP2bniuwmVtYMdbiDEU7domEtND1u1FFXRy9Z3jE4hX5k7Sby/Ll+uUrFfzf2Mkw6TRX+fseYXLmnbpJAmf1Qi9qpTA6O7vUnyIAD1Nl3hlbcJhJS5F8+j+teCHL+8SyegoUaBCBuoA2XiIRXG+eCcjEb9OGCnhJI7BLWbUWcvyP3h8ayFuZD0KZaEQfHVlsZ1LOLk5uWBzIUDDUr4Z29GGLmhmDuYU6IA/BD5AJwrmIwywf/mtnnmrcUtc67czJwroMIZriKgMDvI1f7QMq3Ph00KZa/A/IMRUSVVE395LeGUOYozjc4yJ560ww40N0SVEV5Kqg+2Lsb/hXWBTwYOGCXr7r2SM9rbXFYLRHmion3XpQVzkbW/zA0H52wrivkKRuPHEpxMeye/YTjfiMmSBBAP6luAlT7Y+DKOEHJmtyCgcufGyNZaSGpcs4vVPjJnac+iRH3fwhgHmLF8yvyklxg2iGaQKZZ+EolDOkn+IrQLvPIcfW1didM8loTCqZBuFepSauS8p3FWh2iOfabeOKAbKESN43+c6tLmuxXzBqdpG2/b/w5y4DpQmrSJSB28GD1MpdoBCyleAN5WcPLsfhfMdjRqpnxj2igbQfwMA5f4q2TeGI0pe2O2/vJSFCGBA+dsJZSiYnYB4CTpsv6kZh7Ao+eGQotx0=
+  on:
+    tags: true
