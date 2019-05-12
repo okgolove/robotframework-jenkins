@@ -58,3 +58,9 @@ class JenkinsLibrary(object):
 
     def get_next_build_number(self, name):
         return self.jenkins.get_next_build_number(name)
+
+    def is_build_finished(self, name, build_number):
+        return self.jenkins.is_build_finished(name, build_number)
+    
+    def is_build_started(self, name, build_number):
+        return self.jenkins.is_build_started(name, build_number)

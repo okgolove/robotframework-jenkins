@@ -103,12 +103,36 @@ class Server(object):
         return builds
 
     @is_server_initialized
+    def is_build_finished(self, name, build_number):
+        try:
+            build = self.server.get_build_info(name, int(build_number))
+        except jenkins.NotFoundException:
+            raise RuntimeError(
+                'There is no specified job or build in Jenkins: {0}'.format(name))
+        if not build['building'] and build['result'] is not None:
+            return True
+        return False
+
+    @is_server_initialized
+    def is_build_started(self, name, build_number):
+        try:
+            build = self.server.get_build_info(name, int(build_number))
+        except jenkins.NotFoundException:
+            raise RuntimeError(
+                'There is no specified job or build in Jenkins: job: {0}, '
+                'build: {1}'.format(name, build_number))
+        if build['building'] and build['result'] is None:
+            return True
+        return False
+
+    @is_server_initialized
     def get_job_config(self, name):
         try:
             job_xml = self.server.get_job_config(name)
         except jenkins.NotFoundException:
             raise RuntimeError(
-                'There is no specified job in Jenkins: {0}'.format(name))
+                'There is no specified job or build in Jenkins: job: {0}, '
+                'build: {1}'.format(name, build_number))
         return job_xml
 
     @is_server_initialized

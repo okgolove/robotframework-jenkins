@@ -27,6 +27,25 @@ Get Builds (existent jobs, no builds)
     Should Not Be True    ${builds['lastBuild']}
     Should Be Equal As Integers    1    ${builds['nextBuildNumber']}
 
+Check Finished Build Status 
+    [Tags]    job    build
+    [Setup]    Create Job From Template    ${test_job_name}    ${job_sleep}
+    [Teardown]    Delete Jenkins Job    ${test_job_name}
+    ${build_number} =    Start Jenkins Job    ${test_job_name}
+    Wait Until Build Starts    ${test_job_name}    ${build_number}
+    ${build_finished} =    Is Build Finished    ${test_job_name}    ${build_number}
+    Should Not Be True    ${build_finished}
+
+Check Running Build Status 
+    [Tags]    job    build
+    [Setup]    Create Job From Template    ${test_job_name}    ${job_sleep}
+    [Teardown]    Delete Jenkins Job    ${test_job_name}
+    ${build_number} =    Start Jenkins Job    ${test_job_name}
+    Wait Until Build Starts    ${test_job_name}    ${build_number}    60 sec 
+    Wait Until Build Finishes    ${test_job_name}    ${build_number}
+    ${build_finished} =    Is Build Finished    ${test_job_name}    ${build_number}
+    Should Be True    ${build_finished}
+
 Get Next Build Number
     [Tags]    job    build
     [Setup]    Create Jenkins Job    ${test_job_name}
@@ -35,6 +54,7 @@ Get Next Build Number
     :FOR    ${run}    IN RANGE    ${random_int}
     \    ${next_build_before} =    Get Next Build Number    ${test_job_name}
     \    Should Be Equal As Integers    ${run + 1}    ${next_build_before}
-    \    Start Jenkins Job    ${test_job_name}
+    \    ${build_number} =    Start Jenkins Job    ${test_job_name}
+    \    Wait Until Build Finishes    ${test_job_name}    ${build_number}
     \    ${next_build_after} =    Get Next Build Number    ${test_job_name}
     \    Should Be Equal As Integers    ${run + 2}    ${next_build_after}
