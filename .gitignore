@@ -99,10 +99,10 @@ ENV/
 # mypy
 .mypy_cache/
 
-.pre-commit-config.yaml
-Pipfile
-
 # Robot Framework logs
 log.html
 output.xml
 report.html
+
+Pipfile
+Pipfile.lock
