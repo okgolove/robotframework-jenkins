@@ -145,6 +145,9 @@ class Server(object):
                     'name': param['name'],
                     'description': param['description'],
                     'type': param['type'],
-                    'value': param['defaultParameterValue']['value']
+                    # TODO: Add testcase with filepath parameter in a job
+                    'value': param['defaultParameterValue'] if \
+                             param['defaultParameterValue'] is None else \
+                             param['defaultParameterValue'].get('value', None)
                 })
         return params
