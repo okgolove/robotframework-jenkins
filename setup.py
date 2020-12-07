@@ -6,9 +6,9 @@ exec(open(join(dirname(__file__),
 PACKAGE = 'robotframework-jenkins'
 DESCRIPTION = '''Library for Robot Framework for Jenkins interaction'''
 REQUIREMENTS = [
-    'python-jenkins==1.*',
-    'robotframework==3.*',
-    'requests==2.*'
+    'python-jenkins>=1.*',
+    'robotframework>=3.*',
+    'requests>=2.*'
 ]
 
 with open('README.md') as f:
