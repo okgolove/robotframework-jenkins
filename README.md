@@ -1,4 +1,3 @@
-[![Build Status](https://travis-ci.org/okgolove/robotframework-jenkins.svg?branch=master)](https://travis-ci.org/okgolove/robotframework-jenkins)
 [![PyPI version](https://badge.fury.io/py/robotframework-jenkins.svg)](https://badge.fury.io/py/robotframework-jenkins)
 ![Supported Jenkins Version](https://img.shields.io/badge/Tested%20with%20jenkins-%3E2.176.1%20%3C2.234-blue)
 

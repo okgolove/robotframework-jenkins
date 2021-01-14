@@ -1,0 +1,8 @@
+addReviewers: true
+addAssignees: true
+reviewers: 
+  - okgolove
+assignees:
+  - okgolove
+numberOfReviewers: 1
+numberOfAssignees: 1
