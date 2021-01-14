@@ -1,0 +1,43 @@
+name: Test library
+
+on: pull_request
+
+jobs:
+  rftest:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [2.7, 3.5, 3.6, 3.7, 3.8]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      
+      - name: Build Jenkins image
+        run: |
+          docker ps
+          docker build --pull -t jenkins-test atest/docker
+          docker run -p 127.0.0.1:8080:8080 -e JAVA_OPTS=-Djenkins.install.runSetupWizard=false -d jenkins-test
+
+      - name: Install library
+        run: pip install .
+
+      - name: Run robot framework tests
+        run: robot --loglevel DEBUG atest/
+
+      - name: Upload robot framework test results
+        uses: actions/upload-artifact@v2
+        with:
+          name: robotframework-results-${{ matrix.python-version }}
+          path: |
+            output.xml
+            log.html
+            report.html
+        if: ${{ always() }}
