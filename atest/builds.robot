@@ -28,7 +28,7 @@ Get Builds (existent jobs, no builds)
     Should Not Be True    ${builds['lastBuild']}
     Should Be Equal As Integers    1    ${builds['nextBuildNumber']}
 
-Check Finished Build Status 
+Check Finished Build Status
     [Tags]    job    build
     [Setup]    Create Job From Template    ${test_job_name}    ${job_sleep}
     [Teardown]    Delete Jenkins Job    ${test_job_name}
@@ -37,12 +37,12 @@ Check Finished Build Status
     ${build_finished} =    Is Build Finished    ${test_job_name}    ${build_number}
     Should Not Be True    ${build_finished}
 
-Check Running Build Status 
+Check Running Build Status
     [Tags]    job    build
     [Setup]    Create Job From Template    ${test_job_name}    ${job_sleep}
     [Teardown]    Delete Jenkins Job    ${test_job_name}
     ${build_number} =    Start Jenkins Job    ${test_job_name}
-    Wait Until Build Starts    ${test_job_name}    ${build_number}    60 sec 
+    Wait Until Build Starts    ${test_job_name}    ${build_number}    60 sec
     Wait Until Build Finishes    ${test_job_name}    ${build_number}
     ${build_finished} =    Is Build Finished    ${test_job_name}    ${build_number}
     Should Be True    ${build_finished}
@@ -52,10 +52,11 @@ Get Next Build Number
     [Setup]    Create Jenkins Job    ${test_job_name}
     [Teardown]    Delete Jenkins Job    ${test_job_name}
     ${random_int} =    Evaluate    random.randint(2, 10)    modules=random
-    :FOR    ${run}    IN RANGE    ${random_int}
-    \    ${next_build_before} =    Get Next Build Number    ${test_job_name}
-    \    Should Be Equal As Integers    ${run + 1}    ${next_build_before}
-    \    ${build_number} =    Start Jenkins Job    ${test_job_name}
-    \    Wait Until Build Finishes    ${test_job_name}    ${build_number}
-    \    ${next_build_after} =    Get Next Build Number    ${test_job_name}
-    \    Should Be Equal As Integers    ${run + 2}    ${next_build_after}
+    FOR    ${run}    IN RANGE    ${random_int}
+        ${next_build_before} =    Get Next Build Number    ${test_job_name}
+        Should Be Equal As Integers    ${run + 1}    ${next_build_before}
+        ${build_number} =    Start Jenkins Job    ${test_job_name}
+        Wait Until Build Finishes    ${test_job_name}    ${build_number}
+        ${next_build_after} =    Get Next Build Number    ${test_job_name}
+        Should Be Equal As Integers    ${run + 2}    ${next_build_after}
+    END

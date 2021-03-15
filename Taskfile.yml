@@ -1,0 +1,29 @@
+version: '3'
+
+tasks:
+  build:
+    cmds:
+      - python setup.py sdist bdist_wheel --universal
+
+  publish:
+    cmds:
+      - twine upload dist/*
+
+  test:docker:rf:
+    cmds:
+      - task: jenkins:docker:run
+      - task: test:rf
+      - task: jenkins:docker:stop
+
+  test:rf:
+    cmds:
+      - robot --loglevel DEBUG --pythonpath src/ atest/
+
+  jenkins:docker:run:
+    cmds:
+      - docker build --pull -t jenkins-robotframework-test atest/docker
+      - docker run --rm --name jenkins-robotframework-test -p 127.0.0.1:8080:8080 -e JAVA_OPTS=-Djenkins.install.runSetupWizard=false -d jenkins-robotframework-test
+
+  jenkins:docker:stop:
+    cmds:
+      - docker stop jenkins-robotframework-test

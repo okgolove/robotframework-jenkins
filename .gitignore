@@ -104,5 +104,5 @@ log.html
 output.xml
 report.html
 
-Pipfile
-Pipfile.lock
+# VSCode repo level settings
+.vscode
