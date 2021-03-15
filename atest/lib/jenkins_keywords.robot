@@ -34,9 +34,10 @@ Create Job From Template
 Create Job And Run Multiple Builds
     [Arguments]    ${job_name}    ${count}=2
     Create Jenkins Job    ${job_name}
-    :FOR    ${run}    IN RANGE    ${count}
-    \    ${build_number} =    Start Jenkins Job    ${job_name}
-    \    Wait Until Build Finishes    ${job_name}    ${build_number}
+    FOR    ${run}    IN RANGE    ${count}
+        ${build_number} =    Start Jenkins Job    ${job_name}
+        Wait Until Build Finishes    ${job_name}    ${build_number}
+    END
 
 Check Build Is Finished
     [Arguments]    ${job_name}    ${build_number}
@@ -51,9 +52,9 @@ Check Build Is Started
 Wait Until Build Finishes
     [Arguments]    ${job_name}    ${build_number}   ${timeout}=20 sec  ${period}=2 sec
     Wait Until Keyword Succeeds    ${timeout}    ${period}\
-    ...   Check Build Is Finished   ${test_job_name}    ${build_number} 
+    ...   Check Build Is Finished   ${test_job_name}    ${build_number}
 
 Wait Until Build Starts
     [Arguments]    ${job_name}    ${build_number}   ${timeout}=20 sec  ${period}=2 sec
     Wait Until Keyword Succeeds    ${timeout}    ${period}\
-    ...   Check Build Is Started   ${test_job_name}    ${build_number} 
+    ...   Check Build Is Started   ${test_job_name}    ${build_number}
