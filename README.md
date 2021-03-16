@@ -10,6 +10,11 @@ Introduction
 JenkinsLibrary is a Robot Framework test
 library which helps you to involve Jenkins in your tests.
 
+Keyword Documentation
+---------------------
+
+See [keyword documentation](https://okgolove.github.io/robotframework-jenkins) for available keywords.
+
 Installation
 ------------
 
