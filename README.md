@@ -1,8 +1,8 @@
 JenkinsLibrary for Robot Framework
 ==============================
 
-![PyPI](https://img.shields.io/pypi/v/robotframework-jenkins?style=for-the-badge&color=green)
-![Supported Jenkins Version](https://img.shields.io/badge/Tested%20with%20Jenkins-%3E2.176.1%20%3C2.234-blue?style=for-the-badge)
+[![PyPI](https://img.shields.io/pypi/v/robotframework-jenkins?style=for-the-badge&color=green&logo=pypi)](https://pypi.org/project/robotframework-jenkins/)
+![Supported Jenkins Version](https://img.shields.io/badge/Tested%20with%20Jenkins-%3E2.176.1%20%3C2.234-blue?style=for-the-badge&logo=jenkins&logoColor=white)
 
 Introduction
 ------------
