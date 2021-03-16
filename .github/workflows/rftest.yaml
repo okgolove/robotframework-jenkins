@@ -1,4 +1,4 @@
-name: Test library
+name: Test Library
 
 on: pull_request
 
@@ -19,7 +19,7 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
-      
+
       - name: Build Jenkins image
         run: |
           docker ps
