@@ -106,3 +106,5 @@ report.html
 
 # VSCode repo level settings
 .vscode
+
+.DS_Store
