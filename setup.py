@@ -6,9 +6,9 @@ exec(open(join(dirname(__file__),
 PACKAGE = 'robotframework-jenkins'
 DESCRIPTION = '''Library for Robot Framework for Jenkins interaction'''
 REQUIREMENTS = [
-    'python-jenkins>=1.*',
-    'robotframework>=3.*',
-    'requests>=2.*'
+    'python-jenkins>=1.0',
+    'robotframework>=3.0',
+    'requests>=2.0'
 ]
 
 with open('README.md') as f:
@@ -19,7 +19,6 @@ Development Status :: 5 - Production/Stable
 License :: OSI Approved :: MIT License
 Operating System :: OS Independent
 Programming Language :: Python
-Programming Language :: Python :: 2
 Programming Language :: Python :: 3
 Topic :: Software Development :: Testing
 Framework :: Robot Framework
