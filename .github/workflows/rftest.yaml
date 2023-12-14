@@ -33,7 +33,7 @@ jobs:
         run: robot --loglevel DEBUG atest/
 
       - name: Upload robot framework test results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: robotframework-results-${{ matrix.python-version }}
           path: |
