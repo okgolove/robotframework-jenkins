@@ -1,29 +1,38 @@
 name: Upload Python Package
 
-on:
+"on":
   release:
-    types: [created]
+    types:
+      - created
+
+permissions: read-all
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
+    environment:
+      name: pypi
+      url: https://pypi.org/p/robotframework-jenkins
     steps:
-      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
+      - uses: actions/checkout@ff7abcd0c3c05ccf6adc123a8cd1fd4fb30fb493
+        with:
+          persist-credentials: false
 
       - name: Set up Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@4267e283df95c05d9f16ece6624106f44613b489
         with:
-          python-version: '3.x'
+          python-version: "3.x"
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install setuptools wheel twine
 
-      - name: Build and publish
-        env:
-          TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
-          TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+      - name: Build
         run: |
           python setup.py sdist bdist_wheel
-          twine upload dist/*
+
+      - name: Publish package distributions to PyPI
+        uses: pypa/gh-action-pypi-publish@ed0c53931b1dc9bd32cbe73a98c7f6766f8a527e

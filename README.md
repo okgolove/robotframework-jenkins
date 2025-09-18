@@ -1,40 +1,36 @@
-JenkinsLibrary for Robot Framework
-==============================
+# JenkinsLibrary for Robot Framework
 
 [![PyPI](https://img.shields.io/pypi/v/robotframework-jenkins?style=for-the-badge&color=green&logo=pypi)](https://pypi.org/project/robotframework-jenkins/)
 ![Supported Jenkins Version](https://img.shields.io/badge/Tested%20with%20Jenkins-%3E2.176.1%20%3C2.234-blue?style=for-the-badge&logo=jenkins&logoColor=white)
 
-Introduction
-------------
+## Introduction
 
 JenkinsLibrary is a Robot Framework test
 library which helps you to involve Jenkins in your tests.
 
-Keyword Documentation
----------------------
+## Keyword Documentation
 
 See [keyword documentation](https://okgolove.github.io/robotframework-jenkins) for available keywords.
 
-Installation
-------------
+## Installation
 
 Just run:
 
     pip install robotframework-jenkins
 
-Usage
-------------
+## Usage
 
 You need to import Jenkins library:
 
     *** Settings ***
     Library    JenkinsLibrary
+
 Then, you need to initialize Jenkins server with keyword:
 
     Set Jenkins Server    url=http://example.com:8080    username=admin    password=admin
 
-Example
-------------
+## Example
+
     *** Settings ***
     Library    JenkinsLibrary
 
