@@ -1,9 +1,11 @@
 name: Lint Code Base
 
-on:
+"on":
   pull_request:
     branches:
       - main
+
+permissions: read-all
 
 jobs:
   build:
@@ -11,11 +13,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v5
+        uses: actions/checkout@ff7abcd0c3c05ccf6adc123a8cd1fd4fb30fb493
         with:
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Lint Code Base
-        uses: github/super-linter@v7
+        uses: super-linter/super-linter@6d78b52288ec7b73aca6aad7e4b148f6476fe024
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FILTER_REGEX_EXCLUDE: ^atest/
+          VALIDATE_YAML_PRETTIER: false
+          VALIDATE_JSON_PRETTIER: false

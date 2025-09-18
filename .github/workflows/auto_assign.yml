@@ -1,12 +1,14 @@
 name: Auto Assign
 
-on: pull_request
+"on": pull_request
+
+permissions: read-all
 
 jobs:
   add-reviews:
     name: Auto Assign
     runs-on: ubuntu-latest
     steps:
-      - uses: kentaro-m/auto-assign-action@v2.0.0
+      - uses: kentaro-m/auto-assign-action@1a583dfb5dd75d0df34ecc781081e5a6a73d2dce
         with:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"

@@ -1,19 +1,23 @@
 name: RF Documentation
 
-on:
+"on":
   release:
     types: [created]
+
+permissions: read-all
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@ff7abcd0c3c05ccf6adc123a8cd1fd4fb30fb493
+        with:
+          persist-credentials: false
 
       - name: Set up Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@4267e283df95c05d9f16ece6624106f44613b489
         with:
-          python-version: '3.x'
+          python-version: "3.x"
 
       - name: Install dependencies
         run: |
@@ -24,7 +28,7 @@ jobs:
         run: pipenv run python -m robot.libdoc -f HTML src/JenkinsLibrary public/index.html
 
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v4
+        uses: peaceiris/actions-gh-pages@4b09552702d0b65573696410d4707c765da2630b
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public

@@ -1,0 +1,10 @@
+{
+    "absolute": true,
+    "ignore": [
+        "**/atest/**"
+    ],
+    "reporters": [
+        "consoleFull"
+    ],
+    "threshold": 0
+}

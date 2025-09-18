@@ -1,6 +1,8 @@
 name: Test Library
 
-on: pull_request
+"on": pull_request
+
+permissions: read-all
 
 jobs:
   rftest:
@@ -17,10 +19,12 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@ff7abcd0c3c05ccf6adc123a8cd1fd4fb30fb493
+        with:
+          persist-credentials: false
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@4267e283df95c05d9f16ece6624106f44613b489
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -40,7 +44,7 @@ jobs:
         run: robot --loglevel DEBUG atest/
 
       - name: Upload robot framework test results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@de65e23aa2b7e23d713bb51fbfcb6d502f8667d8
         with:
           name: robotframework-results-${{ matrix.python-version }}
           path: |
