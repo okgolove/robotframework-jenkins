@@ -7,13 +7,17 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.8, 3.9, "3.10", "3.11", "3.12"]
+        python-version:
+          - "3.8"
+          - "3.9"
+          - "3.10"
+          - "3.11"
+          - "3.12"
+          - "3.13"
 
     steps:
       - name: Checkout
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
-        with:
-          fetch-depth: 0
+        uses: actions/checkout@v5
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v6
@@ -24,7 +28,10 @@ jobs:
         run: |
           docker ps
           docker build --pull -t jenkins-test atest/docker
-          docker run -p 127.0.0.1:8080:8080 -e JAVA_OPTS=-Djenkins.install.runSetupWizard=false -d jenkins-test
+          docker run \
+            -p 127.0.0.1:8080:8080 \
+            -e JAVA_OPTS=-Djenkins.install.runSetupWizard=false \
+            -d jenkins-test
 
       - name: Install library
         run: pip install .
@@ -40,4 +47,4 @@ jobs:
             output.xml
             log.html
             report.html
-        if: ${{ always() }}
+        if: always()
